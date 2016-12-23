@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>andrelfpinto-multibox demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../andrelfpinto-multibox.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+      andrelfpinto-multibox {
+        display: block;
+        margin-right: 24px;
+      }
+
+      demo-snippet {
+        margin-bottom: 40px;
+      }
+      .vertical-section-container {
+        max-width: 650px;
+      }
+    </style>
+  </head>
+  <body>
+  <body unresolved>
+    <div class="vertical-section-container centered">
+      <h3>Default multibox</h3>
+      <demo-snippet class="centered-demo">
+        <template>
+          <andrelfpinto-multibox>Multibox blank</andrelfpinto-multibox>
+          <andrelfpinto-multibox state="0">Multibox blank</andrelfpinto-multibox>
+          <andrelfpinto-multibox state="1">Multibox true</andrelfpinto-multibox>
+          <andrelfpinto-multibox state="2">Multibox false</andrelfpinto-multibox>
+        </template>
+      </demo-snippet>
+      <h3>Multibox with custom icons</h3>
+      <demo-snippet class="centered-demo">
+        <template>
+          <andrelfpinto-multibox toggle-icons='["icons:assignment", "icons:assignment-ind", "icons:assignment-late", "icons:assignment-return", "icons:assignment-returned", "icons:assignment-turned-in"]'>Multibox</andrelfpinto-multibox>
+        </template>
+      </demo-snippet>
+      <h3>Multibox disabled</h3>
+      <demo-snippet class="centered-demo">
+        <template>
+          <andrelfpinto-multibox id="master" toggle-icons='["andrelfpinto:multibox-false","andrelfpinto:multibox-true"]'>Master</andrelfpinto-multibox>
+          <andrelfpinto-multibox id="slave" toggle-icons='["andrelfpinto:multibox-false","andrelfpinto:multibox-true"]' disabled>Slave</andrelfpinto-multibox>
+        </template>
+        <script>
+          document.addEventListener('WebComponentsReady', function() {
+            var master = document.querySelector("#master");
+            var slave = document.querySelector("#slave");
+
+            master.addEventListener("state-changed", function (e) {
+              var state = e.srcElement.state
+              if (state == 1) {
+                slave.disabled = false;
+              } else {
+                slave.disabled = true;
+              }
+            });
+          });
+        </script>
+      </demo-snippet>
+    </div>
+  </body>
+</html>

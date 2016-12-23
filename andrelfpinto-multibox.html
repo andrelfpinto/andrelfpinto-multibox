@@ -1,0 +1,69 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../andrelfpinto-icons/andrelfpinto-icons.html">
+
+<!--
+`andrelfpinto-multibox`
+Checkbox with multiple states.
+
+@demo demo/index.html 
+-->
+
+<dom-module id="andrelfpinto-multibox">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      :host([disabled]) {
+        opacity: 0.5;
+      }
+    </style>
+    <iron-icon id="iconElement">
+    </iron-icon>
+    <span><content></content></span>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'andrelfpinto-multibox',
+
+      properties: {
+        toggleIcons: {
+          type: Array,
+          value: [
+            "andrelfpinto:multibox-blank",
+            "andrelfpinto:multibox-true",
+            "andrelfpinto:multibox-false"
+          ]
+        },
+        state: {
+          type: Number,
+          value: 0,
+          notify: true,
+          reflectToAttribute: true
+        },
+        disabled: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          reflectToAttribute: true
+        },
+      },
+      listeners: {
+        'iconElement.tap': 'toggle'
+      },
+      observers: [
+        '_updateIcon(toggleIcons, state)'
+      ],
+      toggle: function() {
+        if (!this.disabled) {
+          this.state = (this.state + 1) % this.toggleIcons.length;
+        }
+      },
+      _updateIcon: function(icons, i) {
+        this.$.iconElement.icon = icons[i];
+      },
+    });
+  </script>
+</dom-module>
